@@ -1,0 +1,46 @@
+apiVersion: v2
+name: azahar
+description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC webtop image
+type: application
+version: 1.0.0
+appVersion: "latest"
+keywords:
+  - azahar
+  - emulator
+  - 3ds
+  - citra
+  - retrogaming
+  - kasmvnc
+  - linuxserver
+home: https://docs.linuxserver.io/images/docker-azahar/
+sources:
+  - https://github.com/linuxserver/docker-azahar
+  - https://github.com/HenriqZimer/azahar-helm-chart
+maintainers:
+  - name: HenriqZimer
+    email: henrique.zimermann@outlook.com
+    url: https://henriqzimer.com.br
+annotations:
+  artifacthub.io/license: MIT
+  artifacthub.io/links: |
+    - name: Helm Repository
+      url: https://henriqzimer.github.io/azahar-helm-chart/
+    - name: Chart Source
+      url: https://github.com/HenriqZimer/azahar-helm-chart
+    - name: Maintainer Website
+      url: https://henriqzimer.com.br
+    - name: GitHub Profile
+      url: https://github.com/HenriqZimer
+    - name: linuxserver.io Azahar Image
+      url: https://docs.linuxserver.io/images/docker-azahar/
+    - name: Documentation
+      url: https://github.com/HenriqZimer/azahar-helm-chart/blob/main/chart/README.md
+  artifacthub.io/changes: |
+    - kind: added
+      description: Initial release of the Azahar Helm chart
+    - kind: added
+      description: GPU passthrough for both Intel/AMD (VA-API via /dev/dri) and NVIDIA (via the NVIDIA Kubernetes device plugin, gpu.vendor=nvidia)
+    - kind: added
+      description: seccompUnconfined and a 2Gi default shmSize, both carried over from this chart's sibling pcsx2-helm-chart after PCSX2's JIT recompiler was found to crash with SIGBUS under Docker/Kubernetes' default seccomp/shm limits - not independently confirmed on Azahar, but the same base image/toolchain makes it a likely fix if you hit the same crash
+    - kind: added
+      description: streaming.enabled/streaming.brokerPort in values.yaml, kept only so the chart's shape matches its siblings. WARNING - no RomM broker mod exists for Azahar at all - unlike PCSX2/Dolphin/xemu/Eden/RPCS3/PPSSPP there isn't even a placeholder repo, azahar-romm-integration does not exist anywhere on GitHub - there is nothing to enable yet

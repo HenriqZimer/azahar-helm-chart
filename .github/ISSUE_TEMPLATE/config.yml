@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/HenriqZimer/azahar-helm-chart/discussions
+    about: For questions, use GitHub Discussions
+  - name: Azahar Docker Image Issues
+    url: https://github.com/linuxserver/docker-azahar/issues
+    about: For issues with the linuxserver.io Azahar image itself (not the Helm chart), use the official image repository
