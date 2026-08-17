@@ -1,6 +1,6 @@
 # Azahar Helm Chart
 
-[![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)](https://github.com/HenriqZimer/azahar-helm-chart)
+[![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square)](https://github.com/HenriqZimer/azahar-helm-chart)
 [![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)](https://docs.linuxserver.io/images/docker-azahar/)
 
 A Helm chart for [Azahar](https://docs.linuxserver.io/images/docker-azahar/) - the linuxserver.io
@@ -46,7 +46,7 @@ git clone https://github.com/HenriqZimer/azahar-helm-chart.git
 cd azahar-helm-chart
 
 helm package chart/
-helm install azahar ./azahar-1.0.1.tgz
+helm install azahar ./azahar-1.0.2.tgz
 ```
 
 ## Configuration
