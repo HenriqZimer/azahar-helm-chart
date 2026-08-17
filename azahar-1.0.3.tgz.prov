@@ -1,0 +1,89 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+annotations:
+  artifacthub.io/changes: |
+    - kind: added
+      description: Chart releases are now signed (helm package --sign) - see artifacthub.io/signKey for the public key location and fingerprint, powers the "Signed" badge on ArtifactHub
+  artifacthub.io/changesHistory: |
+    - version: 1.0.2
+      changes:
+        - kind: added
+          description: values.schema.json - validates values.yaml against a JSON Schema, and is what powers the "Values schema" feature/badge on ArtifactHub (previously absent)
+    - version: 1.0.1
+      changes:
+        - kind: added
+          description: icon, previously missing entirely - pointed at linuxserver.io's own logo image for this app, which is why no image was ever showing on ArtifactHub
+    - version: 1.0.0
+      changes:
+        - kind: added
+          description: Initial release of the Azahar Helm chart
+        - kind: added
+          description: GPU passthrough for both Intel/AMD (VA-API via /dev/dri) and NVIDIA (via the NVIDIA Kubernetes device plugin, gpu.vendor=nvidia)
+        - kind: added
+          description: seccompUnconfined and a 2Gi default shmSize, both carried over from this chart's sibling pcsx2-helm-chart after PCSX2's JIT recompiler was found to crash with SIGBUS under Docker/Kubernetes' default seccomp/shm limits - not independently confirmed on Azahar, but the same base image/toolchain makes it a likely fix if you hit the same crash
+        - kind: added
+          description: streaming.enabled/streaming.brokerPort in values.yaml, kept only so the chart's shape matches its siblings. WARNING - no RomM broker mod exists for Azahar at all - unlike PCSX2/Dolphin/xemu/Eden/RPCS3/PPSSPP there isn't even a placeholder repo, azahar-romm-integration does not exist anywhere on GitHub - there is nothing to enable yet
+  artifacthub.io/license: MIT
+  artifacthub.io/links: |
+    - name: Helm Repository
+      url: https://henriqzimer.github.io/azahar-helm-chart/
+    - name: Chart Source
+      url: https://github.com/HenriqZimer/azahar-helm-chart
+    - name: Maintainer Website
+      url: https://henriqzimer.com.br
+    - name: GitHub Profile
+      url: https://github.com/HenriqZimer
+    - name: linuxserver.io Azahar Image
+      url: https://docs.linuxserver.io/images/docker-azahar/
+    - name: Documentation
+      url: https://github.com/HenriqZimer/azahar-helm-chart/blob/main/chart/README.md
+  artifacthub.io/signKey: |
+    fingerprint: C2E2E16693F2715BA0B23913BF94E5067859562F
+    url: https://henriqzimer.github.io/azahar-helm-chart/HenriqZimer-helm-charts-public.asc
+apiVersion: v2
+appVersion: latest
+description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC webtop
+  image
+home: https://docs.linuxserver.io/images/docker-azahar/
+icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/azahar-logo.png
+keywords:
+- - azahar
+- - emulator
+- - 3ds
+- - citra
+- - retrogaming
+- - kasmvnc
+- - linuxserver
+maintainers:
+- - email: henrique.zimermann@outlook.com
+  name: HenriqZimer
+  url: https://henriqzimer.com.br
+name: azahar
+sources:
+- - https://github.com/linuxserver/docker-azahar
+- - https://github.com/HenriqZimer/azahar-helm-chart
+type: application
+version: 1.0.3
+
+...
+files:
+  azahar-1.0.3.tgz: sha256:d2fadef0d0ff1ea1b98bbf8b7ac2e0adcf561ee387dc1a4cc262230aac4a1403
+
+-----BEGIN PGP SIGNATURE-----
+
+wsG5BAEBCgBtBYJqgvE8CRC/lOUGeFlWL0UUAAAAAAAcACBzYWx0QG5vdGF0aW9u
+cy5vcGVucGdwanMub3JnDzxxT/vnYLYdUKISbzTiejgn50GCEoaRuFgPEe/792YW
+IQTC4uFmk/JxW6CyORO/lOUGeFlWLwAArawQAJqI33THWFYboYBwyLr+CBa2tFKc
+HmNZf7Hvt/aLC434/MSDzJIHUJeT3QyxkRAj+bXYQPNYxdhSctgYGCGlht/NYHVg
+jgRx8MbY3Q+I/h+bycROyQVj4c2p9IiTjHIKtiqlag/gBttD7capj/uKRNVUf1WT
+ed4qqgZ4zZP2JXxcpt0woG/v+VmlCX3M3ll9ho7o5KChy9TKLpNRxK7GbigF1YB2
+OkIjomEjfGfwciTgZ74Y6pc+BR2AXnEmgSHb3lUC91Eau51c2X2PJAv0BkFFIT3m
+3yMtHT/B6isskqpNlk6AjAylD0J242O7lmnapesDEdNYDzw90kpyurLzvrgx7f+J
+APkMs00lN8MBHbJwliEGfO8EYgT5cTXFEH9UW/6DtEVADcIIV1xnCTtfkSNdyIgv
+DqkrJF0VgEkyd0ClaFFrh286EJKggvEGgtud8K3ii2U/EXNQF6ajMccxa6/lFffv
+CDAoUkMDz80R1nb9rY/DkHSDC3Ov7Tx6tP7Usj2wb4NSk3+wCqnTCexSOW5ilTkW
+q6skOKV4SaM6mWy9fFtdLXUip8Zz/j2iliMnbYucc2c1B7DFWOFdCO/cpcDcu1Uw
+Yk5HDPcBX28OJhe9IkfV1patNAD9qB42gUBYtMz40LO+oZWdT2IVZRwWS0uqJ6bx
+RFmY8lf5KwpvUDVB
+-----END PGP SIGNATURE-----
