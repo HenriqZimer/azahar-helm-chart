@@ -1,5 +1,9 @@
 # Azahar Helm Chart Repository
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/azahar-logo.png" alt="Azahar logo" width="140" />
+</p>
+
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Helm Version](https://img.shields.io/badge/Helm-v3-blue)](https://helm.sh)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/azahar-helm-chart)](https://artifacthub.io/packages/search?repo=azahar-helm-chart)
