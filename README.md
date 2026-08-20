@@ -28,14 +28,14 @@ your network:
 ### Add Helm Repository
 
 ```bash
-helm repo add azahar https://henriqzimer.github.io/azahar-helm-chart/
+helm repo add azahar-helm-chart https://henriqzimer.github.io/azahar-helm-chart/
 helm repo update
 ```
 
 ### Install Chart
 
 ```bash
-helm install azahar azahar/azahar
+helm install my-azahar azahar-helm-chart/azahar --version 1.0.5
 ```
 
 For detailed installation instructions and configuration options, see the [chart README](chart/README.md).

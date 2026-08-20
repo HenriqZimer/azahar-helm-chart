@@ -4,7 +4,7 @@
   <img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/azahar-logo.png" alt="Azahar logo" width="140" />
 </p>
 
-[![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square)](https://github.com/HenriqZimer/azahar-helm-chart)
+[![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square)](https://github.com/HenriqZimer/azahar-helm-chart)
 [![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)](https://docs.linuxserver.io/images/docker-azahar/)
 
 A Helm chart for [Azahar](https://docs.linuxserver.io/images/docker-azahar/) - the linuxserver.io
@@ -14,11 +14,11 @@ Nintendo 3DS emulator (based on Citra), served as a full desktop over the browse
 
 ```bash
 # Add the Helm repository
-helm repo add azahar https://henriqzimer.github.io/azahar-helm-chart
+helm repo add azahar-helm-chart https://henriqzimer.github.io/azahar-helm-chart/
 helm repo update
 
 # Install Azahar
-helm install azahar azahar/azahar
+helm install my-azahar azahar-helm-chart/azahar --version 1.0.5
 ```
 
 ## Prerequisites
@@ -37,10 +37,10 @@ helm install azahar azahar/azahar
 ### From Helm Repository
 
 ```bash
-helm repo add azahar https://henriqzimer.github.io/azahar-helm-chart
+helm repo add azahar-helm-chart https://henriqzimer.github.io/azahar-helm-chart/
 helm repo update
 
-helm install azahar azahar/azahar
+helm install my-azahar azahar-helm-chart/azahar --version 1.0.5
 ```
 
 ### From Source
@@ -50,7 +50,7 @@ git clone https://github.com/HenriqZimer/azahar-helm-chart.git
 cd azahar-helm-chart
 
 helm package chart/
-helm install azahar ./azahar-1.0.4.tgz
+helm install my-azahar ./azahar-1.0.5.tgz
 ```
 
 ## Configuration
