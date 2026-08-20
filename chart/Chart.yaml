@@ -2,7 +2,7 @@ apiVersion: v2
 name: azahar
 description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC webtop image
 type: application
-version: 1.0.5
+version: 1.1.0
 appVersion: "latest"
 icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/azahar-logo.png
 keywords:
@@ -40,9 +40,13 @@ annotations:
     - name: Documentation
       url: https://github.com/HenriqZimer/azahar-helm-chart/blob/main/chart/README.md
   artifacthub.io/changes: |
-    - kind: fixed
-      description: README install commands now use a unique repo alias (<name>-helm-chart) instead of the bare chart name, and pin --version explicitly, matching what actually works
+    - kind: added
+      description: sunshine.* (POC) - Sunshine/Moonlight low-latency game streaming as an alternative to the default Selkies/KasmVNC streaming, requiring a Docker Mod and hostNetwork/privileged - see CHANGELOG for the full rationale
   artifacthub.io/changesHistory: |
+    - version: 1.0.5
+      changes:
+        - kind: fixed
+          description: README install commands now use a unique repo alias (<name>-helm-chart) instead of the bare chart name, and pin --version explicitly, matching what actually works
     - version: 1.0.4
       changes:
         - kind: changed

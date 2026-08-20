@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-20
+
+### Added
+- `sunshine.*` (POC) - runs Sunshine alongside the default Selkies/KasmVNC streaming for lower-latency Moonlight access, requiring a Docker Mod that installs Sunshine (via the LizardByte pacman repo, since this image is Arch Linux) and swaps the base image's Xvfb (not linked against libudev, so it never hotplugs Sunshine's uinput-created input devices) for a real Xorg + "dummy" driver. Needs `hostNetwork: true` (Moonlight is raw TCP/UDP, can't go through the Traefik Ingress, and the pod needs the host's network namespace for uinput hotplug uevents to reach udev) and `privileged: true` (no native Kubernetes knob for the device cgroup rule the pod needs to open `/dev/input/eventN` nodes created at runtime). Ported from dolphin-sunshine-mod - see that mod's README for the full list of issues found and fixed getting input to work, plus this image's Arch-specific quirks (pacman instead of apt, and an Xorg build that refuses `-config <path>` under privilege elevation).
+
 ## [1.0.5] - 2026-08-17
 
 ### Fixed
