@@ -182,15 +182,16 @@ sunshine:
   # device allowlist). `privileged: true` is the bluntest way to get that
   # on plain Kubernetes; see the chart README for the security tradeoff.
   privileged: true
-  ports:
-    web: 47990
-    http: 47989
-    https: 47984
-    rtsp: 48010
-    video: 47998
-    control: 47999
-    audio: 48000
-    mic: 48002
+  # -- Sunshine only accepts ONE configurable port (the "port" setting in
+  # sunshine.conf, default 47989 = "http") - every other port it listens
+  # on (https, web UI, rtsp, video, control, audio, mic) is a FIXED offset
+  # from this base (confirmed against Sunshine's source, net::map_port()
+  # does `base + offset`; offsets below reverse-engineered from the
+  # default port set: https=-5, web=+1, video=+9, control=+10, audio=+11,
+  # mic=+13, rtsp=+21). Change this if running two Sunshine-enabled
+  # emulators with hostNetwork on the SAME node - they share an IP, so
+  # their base ports can't collide.
+  port: 47989
 
 # -- GPU/hardware acceleration passthrough.
 gpu:

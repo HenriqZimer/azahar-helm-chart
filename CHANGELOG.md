@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-08-21
+
+### Changed
+- **BREAKING**: `sunshine.ports.*` (8 independent fields) replaced by a single `sunshine.port` (default `47989`). Sunshine only accepts one configurable base port ("port" in `sunshine.conf`) - every other port it listens on is a fixed offset from it. The old `ports.*` fields only ever affected the Deployment's `containerPort` entries - Sunshine itself always listened on its hardcoded defaults regardless. Also required a matching `azahar-sunshine-mod` update to write `port = $SUNSHINE_PORT` into `sunshine.conf` - confirmed broken end-to-end on the real cluster (both azahar and dolphin needing hostNetwork on the same GPU node) before this fix.
+
 ## [1.1.0] - 2026-08-20
 
 ### Added

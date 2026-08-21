@@ -328,19 +328,10 @@
           "type": "boolean",
           "default": true
         },
-        "ports": {
-          "type": "object",
-          "properties": {
-            "web": { "type": "integer", "default": 47990 },
-            "http": { "type": "integer", "default": 47989 },
-            "https": { "type": "integer", "default": 47984 },
-            "rtsp": { "type": "integer", "default": 48010 },
-            "video": { "type": "integer", "default": 47998 },
-            "control": { "type": "integer", "default": 47999 },
-            "audio": { "type": "integer", "default": 48000 },
-            "mic": { "type": "integer", "default": 48002 }
-          },
-          "additionalProperties": false
+        "port": {
+          "type": "integer",
+          "default": 47989,
+          "description": "Sunshine's base port (its 'http' port). Every other Sunshine port is a fixed offset from this one - see values.yaml comment."
         }
       },
       "additionalProperties": false
