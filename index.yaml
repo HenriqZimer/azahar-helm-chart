@@ -3,6 +3,110 @@ entries:
   azahar:
   - annotations:
       artifacthub.io/changes: |
+        - kind: changed
+          description: Much more tolerant readinessProbe/livenessProbe initialDelaySeconds (10s->30s / 30s->90s) and a more realistic resources.requests.cpu (500m->1) - under real CPU contention on a shared GPU node, the old tight probe timing was killing containers mid-boot before the KasmVNC desktop finished starting, causing a self-sustaining restart storm
+      artifacthub.io/changesHistory: |
+        - version: 1.4.1
+          changes:
+            - kind: fixed
+              description: "sunshine.service.externalTrafficPolicy default changed from Local to Cluster - MetalLB's IP-sharing feature (allow-shared-ip) requires every Service sharing an external IP to have an IDENTICAL pod selector when using Local traffic policy, which is fundamentally incompatible with sharing one IP across multiple different emulator Deployments (confirmed in production, 2026-08-23: every non-first Service failed allocation with \"can't change sharing key\", regardless of annotation/port config). Cluster does not have that restriction. Tradeoff: an extra kube-proxy hop and loss of the real client source IP, both minor for this use case."
+        - version: 1.4.0
+          changes: |
+            - kind: changed
+              description: "sunshine.hostNetwork now defaults to false, replaced by a new sunshine.service (LoadBalancer via MetalLB) as the default way to expose Moonlight's TCP/UDP ports. Root-caused in production (2026-08-23): with multiple sunshine.hostNetwork pods sharing one node, the base image's KasmVNC nginx (hardcoded on 3000/3001) collided across every pod but the first, permanently breaking browser access for all the others - LoadBalancer keeps each pod's own network namespace, so the collision can't happen regardless of how many sunshine-enabled emulators share a node. hostNetwork is kept as an opt-in fallback (sunshine.hostNetwork: true). sunshine.service supports MetalLB's allow-shared-ip (sunshine.service.sharedIPKey) so multiple emulator releases can share one external IP - set the same loadBalancerIP + sharedIPKey on each, with non-overlapping sunshine.port values."
+        - version: 1.3.0
+          changes: |
+            - kind: added
+              description: "probes.enabled (default true) - set to false to disable the readiness/liveness probe and the http/https containerPort declarations. Needed when running two sunshine.hostNetwork pods on the same node: the Selkies nginx (3000/3001) is hardcoded and can't be moved, so the second pod's probe/hostPort would otherwise crashloop it or block scheduling entirely even though Sunshine itself works fine - the tradeoff is the web UI (KasmVNC) becomes unreachable on that pod, Moonlight is unaffected"
+        - version: 1.2.1
+          changes:
+            - kind: fixed
+              description: "sunshine.* now also mounts /dev/uhid - without it, Sunshine falls back to emulating gamepads as a generic Xbox One controller when the client reports a PlayStation-type pad (DualShock/DualSense), and that fallback does not correctly forward face buttons/triggers (confirmed: analog stick axes work, buttons don't) - the real virtual DualShock/DualSense device needs kernel uhid access to be created"
+        - version: 1.2.0
+          changes:
+            - kind: changed
+              description: "BREAKING: sunshine.ports.* replaced by a single sunshine.port (Sunshine only accepts one configurable base port - every other port is a fixed offset from it, the old independent ports.* fields were silently ignored by Sunshine itself)"
+        - version: 1.1.0
+          changes:
+            - kind: added
+              description: sunshine.* (POC) - Sunshine/Moonlight low-latency game streaming as an alternative to the default Selkies/KasmVNC streaming, requiring a Docker Mod and hostNetwork/privileged - see CHANGELOG for the full rationale
+        - version: 1.0.5
+          changes:
+            - kind: fixed
+              description: README install commands now use a unique repo alias (<name>-helm-chart) instead of the bare chart name, and pin --version explicitly, matching what actually works
+        - version: 1.0.4
+          changes:
+            - kind: changed
+              description: README now shows the emulator's logo at the top (linuxserver.io's own image, same one used for the chart icon)
+        - version: 1.0.3
+          changes:
+            - kind: added
+              description: Chart releases are now signed (helm package --sign) - see artifacthub.io/signKey for the public key location and fingerprint, powers the "Signed" badge on ArtifactHub
+        - version: 1.0.2
+          changes:
+            - kind: added
+              description: values.schema.json - validates values.yaml against a JSON Schema, and is what powers the "Values schema" feature/badge on ArtifactHub (previously absent)
+        - version: 1.0.1
+          changes:
+            - kind: added
+              description: icon, previously missing entirely - pointed at linuxserver.io's own logo image for this app, which is why no image was ever showing on ArtifactHub
+        - version: 1.0.0
+          changes:
+            - kind: added
+              description: Initial release of the Azahar Helm chart
+            - kind: added
+              description: GPU passthrough for both Intel/AMD (VA-API via /dev/dri) and NVIDIA (via the NVIDIA Kubernetes device plugin, gpu.vendor=nvidia)
+            - kind: added
+              description: seccompUnconfined and a 2Gi default shmSize, both carried over from this chart's sibling pcsx2-helm-chart after PCSX2's JIT recompiler was found to crash with SIGBUS under Docker/Kubernetes' default seccomp/shm limits - not independently confirmed on Azahar, but the same base image/toolchain makes it a likely fix if you hit the same crash
+            - kind: added
+              description: streaming.enabled/streaming.brokerPort in values.yaml, kept only so the chart's shape matches its siblings. WARNING - no RomM broker mod exists for Azahar at all - unlike PCSX2/Dolphin/xemu/Eden/RPCS3/PPSSPP there isn't even a placeholder repo, azahar-romm-integration does not exist anywhere on GitHub - there is nothing to enable yet
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: Helm Repository
+          url: https://henriqzimer.github.io/azahar-helm-chart/
+        - name: Chart Source
+          url: https://github.com/HenriqZimer/azahar-helm-chart
+        - name: Maintainer Website
+          url: https://henriqzimer.com.br
+        - name: GitHub Profile
+          url: https://github.com/HenriqZimer
+        - name: linuxserver.io Azahar Image
+          url: https://docs.linuxserver.io/images/docker-azahar/
+        - name: Documentation
+          url: https://github.com/HenriqZimer/azahar-helm-chart/blob/main/chart/README.md
+      artifacthub.io/signKey: |
+        fingerprint: C2E2E16693F2715BA0B23913BF94E5067859562F
+        url: https://henriqzimer.github.io/azahar-helm-chart/HenriqZimer-helm-charts-public.asc
+    apiVersion: v2
+    appVersion: latest
+    created: "2026-08-23T21:56:54.766532761Z"
+    description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC
+      webtop image
+    digest: 4e3c103561c3c491b7219c23bd8c28e4d1f1d41e3679b53ceb95d4e5afe41e25
+    home: https://docs.linuxserver.io/images/docker-azahar/
+    icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/azahar-logo.png
+    keywords:
+    - azahar
+    - emulator
+    - 3ds
+    - citra
+    - retrogaming
+    - kasmvnc
+    - linuxserver
+    maintainers:
+    - email: henrique.zimermann@outlook.com
+      name: HenriqZimer
+      url: https://henriqzimer.com.br
+    name: azahar
+    sources:
+    - https://github.com/linuxserver/docker-azahar
+    - https://github.com/HenriqZimer/azahar-helm-chart
+    type: application
+    urls:
+    - https://henriqzimer.github.io/azahar-helm-chart/azahar-1.4.2.tgz
+    version: 1.4.2
+  - annotations:
+      artifacthub.io/changes: |
         - kind: fixed
           description: "sunshine.service.externalTrafficPolicy default changed from Local to Cluster - MetalLB's IP-sharing feature (allow-shared-ip) requires every Service sharing an external IP to have an IDENTICAL pod selector when using Local traffic policy, which is fundamentally incompatible with sharing one IP across multiple different emulator Deployments (confirmed in production, 2026-08-23: every non-first Service failed allocation with \"can't change sharing key\", regardless of annotation/port config). Cluster does not have that restriction. Tradeoff: an extra kube-proxy hop and loss of the real client source IP, both minor for this use case."
       artifacthub.io/changesHistory: |
@@ -591,7 +695,7 @@ entries:
         url: https://henriqzimer.github.io/azahar-helm-chart/HenriqZimer-helm-charts-public.asc
     apiVersion: v2
     appVersion: latest
-    created: "2026-08-20T04:32:37.183034978Z"
+    created: "2026-08-23T21:56:54.764443559Z"
     description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC
       webtop image
     digest: 99befa4f8a6d8ad4021ace68f7ce905970a7b165892b8f77df2f347f768b4f91
@@ -663,7 +767,7 @@ entries:
         url: https://henriqzimer.github.io/azahar-helm-chart/HenriqZimer-helm-charts-public.asc
     apiVersion: v2
     appVersion: latest
-    created: "2026-08-20T04:32:37.180802897Z"
+    created: "2026-08-23T21:56:54.761826111Z"
     description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC
       webtop image
     digest: cb68258083ee70b5cc5900450dbebafb0f7e6477614ac6c9dc950684b3764562
@@ -731,7 +835,7 @@ entries:
         url: https://henriqzimer.github.io/azahar-helm-chart/HenriqZimer-helm-charts-public.asc
     apiVersion: v2
     appVersion: latest
-    created: "2026-08-20T04:32:37.179066334Z"
+    created: "2026-08-23T21:56:54.760403344Z"
     description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC
       webtop image
     digest: d2fadef0d0ff1ea1b98bbf8b7ac2e0adcf561ee387dc1a4cc262230aac4a1403
@@ -792,7 +896,7 @@ entries:
           url: https://github.com/HenriqZimer/azahar-helm-chart/blob/main/chart/README.md
     apiVersion: v2
     appVersion: latest
-    created: "2026-08-20T04:32:37.177542488Z"
+    created: "2026-08-23T21:56:54.759139826Z"
     description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC
       webtop image
     digest: 9d44b146dc35649ab5a8afb3ce988ddc5b581aa27082b63b668c8e8bbe58c418
@@ -849,7 +953,7 @@ entries:
           url: https://github.com/HenriqZimer/azahar-helm-chart/blob/main/chart/README.md
     apiVersion: v2
     appVersion: latest
-    created: "2026-08-20T04:32:37.175775342Z"
+    created: "2026-08-23T21:56:54.757872368Z"
     description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC
       webtop image
     digest: fc06dd3c113aa034fbacab3927057e36cbf05fc3c78b1f2f08890a56c3a7aac5
@@ -901,7 +1005,7 @@ entries:
           url: https://github.com/HenriqZimer/azahar-helm-chart/blob/main/chart/README.md
     apiVersion: v2
     appVersion: latest
-    created: "2026-08-20T04:32:37.174026693Z"
+    created: "2026-08-23T21:56:54.756648575Z"
     description: A Helm chart for Azahar - the linuxserver.io 3DS emulator KasmVNC
       webtop image
     digest: 4b862963b03580bf18b12d38cedeb6947baca549cd6dd73fca58331efb29f8de
@@ -926,4 +1030,4 @@ entries:
     urls:
     - https://henriqzimer.github.io/azahar-helm-chart/azahar-1.0.0.tgz
     version: 1.0.0
-generated: "2026-08-23T20:43:05.375305809Z"
+generated: "2026-08-23T21:56:54.755057562Z"
