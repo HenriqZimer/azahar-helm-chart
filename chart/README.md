@@ -4,8 +4,8 @@
   <img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/azahar-logo.png" alt="Azahar logo" width="140" />
 </p>
 
-[![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square)](https://github.com/HenriqZimer/azahar-helm-chart)
-[![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)](https://docs.linuxserver.io/images/docker-azahar/)
+[![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square)](https://github.com/HenriqZimer/azahar-helm-chart)
+[![AppVersion: 12126.2-1](https://img.shields.io/badge/AppVersion-12126.2--1-informational?style=flat-square)](https://docs.linuxserver.io/images/docker-azahar/)
 
 A Helm chart for [Azahar](https://docs.linuxserver.io/images/docker-azahar/) - the linuxserver.io
 Nintendo 3DS emulator (based on Citra), served as a full desktop over the browser via KasmVNC.
@@ -194,7 +194,7 @@ opening ROMs from wherever you mounted your library (see `extraVolumes` above).
 |---|---|---|
 | `replicaCount` | `1` | Number of replicas. Must stay at 1 — no session clustering. |
 | `image.repository` | `lscr.io/linuxserver/azahar` | Container image. |
-| `image.tag` | `latest` | Image tag. |
+| `image.tag` | `12126.2-1-ls46` | Image tag. |
 | `env.PUID` / `env.PGID` | `1000` / `1000` | User/group the app runs as; match your storage's ownership. |
 | `env.TZ` | `Etc/UTC` | Timezone. |
 | `env.KASMVNC_ENABLE_BASIC_AUTH` | `false` | Require basic auth on the web UI. |

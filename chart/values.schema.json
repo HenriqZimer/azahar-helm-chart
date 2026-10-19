@@ -65,7 +65,7 @@
         },
         "tag": {
           "type": "string",
-          "default": "latest"
+          "default": "12126.2-1-ls46"
         },
         "pullPolicy": {
           "type": "string",
